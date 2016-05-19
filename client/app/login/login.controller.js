@@ -2,5 +2,5 @@
 
 angular.module('oroboksApp')
   .controller('LoginCtrl', function ($scope) {
-    $scope.message = 'Hello';
+    // write code here
   });

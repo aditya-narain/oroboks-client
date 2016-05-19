@@ -4,13 +4,21 @@
 
 class MainController {
 
-  constructor($http) {
+  constructor($http, $user) {
     this.$http = $http;
     this.awesomeThings = [];
 
     $http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
     });
+
+    $user.get()
+     .then(function (user) {
+       console.log('The current user is', user);
+     })
+     .catch(function (error) {
+       console.log('Error getting user', error);
+     });
   }
 
   addThing() {

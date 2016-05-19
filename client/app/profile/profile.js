@@ -8,7 +8,7 @@ angular.module('oroboksApp')
         templateUrl: 'app/profile/profile.html',
         controller: 'ProfileCtrl',
         sp: {
-		   authenticate: true
-		}
+		       authenticate: true
+		    }
       });
   });

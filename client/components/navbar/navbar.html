@@ -1,32 +1,92 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarController">
-  <div class="container">
-    <div class="navbar-header">
-      <button class="navbar-toggle" type="button" ng-click="nav.isCollapsed = !nav.isCollapsed">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a href="/" class="navbar-brand">oroboks</a>
+<html>
+<head>
+  <link
+    href='https://fonts.googleapis.com/css?family=Paytone+One|Luckiest+Guy|Righteous'
+    rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One'
+    rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700,500' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <div>
+    <div> <!--Navbar implemented here
+           TODO: re write all the id names in a particular format which will be used across whole app--> 
+      <!-- TODO: put this in a different file and include it here instead of having the whole code snippet here-->
+      <nav class="navbar navbar-inverse navbar-static-top"> <!-- having navbar-static-top sticks the nav bar on top and rest of the content dont overlap-->
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span> 
+              <span class="icon-bar"></span> 
+              <span class="icon-bar"></span>
+            </button>
+            <div class="navbar-header">
+              ORO
+            </div>
+
+            <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+                <li if-user ng-class="{active: isActive('/profile')}">
+                    <a ui-sref="profile">Profile</a>
+                </li>
+                <li if-not-user>
+                    <button type="button" class="btn btn-primary btn-lg"
+                        data-toggle="modal" data-target="#modal-login" id="button-signin" ng-click="bIsSignUpAcitve = false">Sign In</button>
+                </li>
+                <li if-not-user>
+                    <button type="button" class="btn btn-info btn-lg"
+                        data-toggle="modal" data-target="#modal-login" id="button-signup" ng-click="bIsSignUpAcitve = true">Sign Up</button>
+                </li>
+                <li if-user ng-class="{active: isActive('/logout')}">
+                    <a ui-sref="main" sp-logout>Logout</a>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </nav>
     </div>
-    <div collapse="nav.isCollapsed" class="navbar-collapse collapse" id="navbar-main">
-      <ul class="nav navbar-nav">
-        <li ng-repeat="item in nav.menu" ui-sref-active="active">
-            <a ui-sref="{{item.state}}">{{item.title}}</a>
-        </li>
-        <li if-user ng-class="{active: isActive('/profile')}">
-            <a ui-sref="profile">Profile</a>
-        </li>
-        <li if-not-user ng-class="{active: isActive('/register')}">
-            <a ui-sref="register">Register</a>
-        </li>
-        <li if-not-user ng-class="{active: isActive('/login')}">
-            <a ui-sref="login">Login</a>
-        </li>
-        <li if-user ng-class="{active: isActive('/logout')}">
-            <a ui-sref="main" sp-logout>Logout</a>
-        </li>
-      </ul>
+
+    <!-- Modal -->
+    <div>
+      <div class="modal fade" id="modal-login" role="dialog">
+        <div class="modal-dialog">
+
+          <div class="modal-content" id="modal-attr">
+            <div ng-switch="bIsSignUpAcitve">
+              <div  ng-switch-when="true">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">SIGN UP</h4>
+                </div>
+                <div class="modal-body">
+                  <div sp-registration-form template-url="components/navbar/spRegistrationFormCustom.html" post-login-state="main"></div>
+                </div>
+              </div>
+              <div  ng-switch-when="false">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">SIGN IN</h4>
+                </div>
+                <div class="modal-body">
+                  <div sp-login-form template-url="components/navbar/spLoginFormCustom.html"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <span ng-hide="bIsSignUpAcitve">Not a User?
+              <a ng-hide="bIsSignUpAcitve" href ng-click="bIsSignUpAcitve = true">Sign Up</a></span>
+
+              <span ng-show="bIsSignUpAcitve">Already a User?
+              <a ng-show="bIsSignUpAcitve" href ng-click="bIsSignUpAcitve = false">Sign In</a></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
-</div>
+</body>
+</html>

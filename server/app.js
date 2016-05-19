@@ -22,10 +22,10 @@ app.use(ExpressStormpath.init(app,{
     spaRoot: path.join(__dirname, '..','client','index.html')
   }
 }));
+
 var server = http.createServer(app);
 require('./config/express')(app);
 require('./routes')(app);
-
 // Start server
 function startServer() {
   app.angularFullstack = app.on('stormpath.ready',function() { server.listen(config.port, config.ip, function() {
