@@ -1,6 +1,6 @@
 # oroboks
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.3.0.
+Front End / Client side of oroboks
 
 ## Getting Started
 
@@ -27,3 +27,7 @@ Run `grunt build` for building and `grunt serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+## Screen Shot
+![ScreenShot](https://github.com/aditya-narain/oroboks-client/blob/master/Screen%20Shot%202016-05-19%20at%201.33.29%20AM.png)
+
