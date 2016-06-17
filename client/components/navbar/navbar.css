@@ -155,24 +155,6 @@ ul.input-list li {
 }
 
 /* login style */
-.navbar-inverse {
-    background-color: #ff7f50;
-    border-color: #E7E7E7;
-    height: 80px;
-    opacity:0.95;
-}
-
-.navbar-form {
-  margin-top: 15px;
-}
-
-.navbar-header {
-  font-family: 'Luckiest Guy', cursive;
-  color: white;
-  font-size: 72px;
-  padding-left: 20px;
-}
-
 .form-group{
   margin-left: 10px;
 }
@@ -199,7 +181,10 @@ ul.input-list li {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
   font-size: 16px;
-  margin-top: 15px;
+  margin-top: 12px;
+}
+#button-signin:focus {
+  outline:0;
 }
 
 #button-signup {
@@ -207,11 +192,127 @@ ul.input-list li {
   font-weight: 300;
   font-size: 16px;
   margin-right: 20px;
-  margin-top: 15px;
+  margin-top: 12px;
+}
+#button-signup:focus {
+  outline:0;
 }
 
 .modal-footer {
   text-align: center;
 }
+
+
+/* NAVBAR - Profile Section CSS - STARTS*/
+.navbar-default {
+  background-color: #ff7f50;
+  border: none;
+  opacity:0.95;
+}
+
+.navbar-header {
+  padding-left: 20px;
+}
+
+.navbar-form {
+  margin-top: 15px;
+}
+
+a#logo-navbar{
+  margin-top: 16px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+  font-family: 'Luckiest Guy', cursive;
+  font-size: 60px;
+}
+
+a#logo-navbar:hover {
+  text-decoration: none;
+}
+
+.navbar-login
+{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  width: 305px;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.navbar-login-session
+{
+  padding: 10px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.navbar-footer 
+{
+}
+
+.navbar-footer-content 
+{ 
+  padding:15px 15px 15px 15px; 
+}
+
+.dropdown-menu {
+  padding: 0px;
+  overflow: hidden;
+}
+
+.icon-size
+{
+  font-size: 87px;
+}
+
+.dropdown-toggle:active, .open .dropdown-toggle {
+  background:rgba(54, 25, 25, .1) !important; 
+  color:white !important;
+  height: 66px;
+}
+
+a.dropdown-toggle {
+  font-size: 18px;
+}
+
+#nav-profilename{
+  color:white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+}
+
+#nav-usericon, #nav-dropdownicon {
+  color: white;
+  margin-top: 6px;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  background:rgba(54, 25, 25, .1) !important;
+  height: 66px;
+}
+
+.navbar-toggle {
+  margin-top: 15px;
+}
+/* NAVBAR - Profile Section CSS - ENDS*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

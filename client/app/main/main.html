@@ -1,27 +1,45 @@
-<div if-not-user>
-  <header class="hero-unit" id="banner-1" style="background:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('assets/images/background-img-food.jpg');">
-    <div ng-include src="'app/main/bannerFirst.html'"></div>
-  </header>
-  <div class="hero-unit" id="banner-2">
-    <div ng-include src="'app/main/howToOro.html'"></div>
-  </div>
-  <div class="hero-unit" id="banner-3">
-    <div class="container">
-      <h1>Why Order from OROBoks</h1>
-    </div>
-  </div>
-  <div class="hero-unit" id="banner-4">
-    <div class="container">
-      <h1>About OROBoks</h1>
-    </div>
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
+<html>
+  <head>
+   <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/src/advanced.css">   
+  </head>
+  <body>
+    <div if-not-user>
+      <header class="hero-unit" id="banner-1" style="background:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('assets/images/background-img-food.jpg');">
+        <div ng-include src="'app/main/bannerFirst.html'"></div>
+      </header>
+      <div class="hero-unit" id="banner-2">
+        <div ng-include src="'app/main/howToOro.html'"></div>
+      </div>
+      <div class="hero-unit" id="banner-3">
+        <div class="container">
+          <h1>Why ORO</h1>
+        </div>
+      </div>
+      <div class="hero-unit" id="banner-4">
+        <div class="container">
+          <h1>About ORO</h1>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-<div if-user id="usershown">
-  Hello world
-</div>
+
+    <div if-user id="usershown">
+      <header class="hero-unit" id="banner-1" style="background:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('assets/images/background-img-food.jpg');">
+        <div ng-include src="'app/main/bannerFirst.html'"></div>
+      </header>
+      <div ng-hide="false" class="hero-unit" id="banner-4">
+        <h1>Your Current Plan</h1>
+      </div>
+      <div class="hero-unit" id="banner-3">
+        <div class="container">
+          <h1>ORO Best Picks</h1>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -82,13 +82,13 @@
       <div class="form-group" ng-repeat="field in viewModel.form.fields">
         <label for="sp-{{field.name}}" class="col-xs-12 col-sm-4 control-label">{{field.label}}</label>
         <div class="col-xs-12 col-sm-4">
-          <input class="form-control" name="{{field.name}}" id="sp-{{field.name}}" type="{{field.type}}" ng-model="formModel[field.name]" placeholder="{{field.placeholder}}" ng-disabled="creating" ng-required="field.required">
+          <input class="form-control" name="{{field.name}}" id="sp-{{field.name}}" type="{{field.type}}" ng-model="formModel[field.name]" placeholder="{{field.placeholder}}" ng-required="field.required">
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-4 col-sm-4">
           <p class="alert alert-danger" ng-show="error" ng-bind="error"></p>
-          <button type="submit" class="btn btn-primary" ng-disabled="creating" id="button-login">Register</button>
+          <button type="submit" class="btn btn-primary" id="button-login">Register</button>
         </div>
       </div>
       <div class="form-group" ng-show="viewModel.accountStores.length">

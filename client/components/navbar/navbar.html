@@ -9,43 +9,71 @@
 </head>
 <body>
   <div>
-    <div> <!--Navbar implemented here
+    <!--Navbar implemented here
            TODO: re write all the id names in a particular format which will be used across whole app--> 
       <!-- TODO: put this in a different file and include it here instead of having the whole code snippet here-->
-      <nav class="navbar navbar-inverse navbar-static-top"> <!-- having navbar-static-top sticks the nav bar on top and rest of the content dont overlap-->
-        <div class="navbar-inner">
-          <div class="container-fluid">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="icon-bar"></span> 
-              <span class="icon-bar"></span> 
-              <span class="icon-bar"></span>
-            </button>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid"> 
             <div class="navbar-header">
-              ORO
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> 
+                </button>
+                <a class="navbar-brand" id="logo-navbar" ui-sref="main">ORO</a>
             </div>
-
-            <div class="navbar-collapse collapse" id="navbar-main">
-              <ul class="nav navbar-nav navbar-right">
-                <li if-user ng-class="{active: isActive('/profile')}">
-                    <a ui-sref="profile">Profile</a>
-                </li>
-                <li if-not-user>
-                    <button type="button" class="btn btn-primary btn-lg"
-                        data-toggle="modal" data-target="#modal-login" id="button-signin" ng-click="bIsSignUpAcitve = false">Sign In</button>
-                </li>
-                <li if-not-user>
-                    <button type="button" class="btn btn-info btn-lg"
-                        data-toggle="modal" data-target="#modal-login" id="button-signup" ng-click="bIsSignUpAcitve = true">Sign Up</button>
-                </li>
-                <li if-user ng-class="{active: isActive('/logout')}">
-                    <a ui-sref="main" sp-logout>Logout</a>
-                </li>
-              </ul>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" id="nav-dropdown" if-user ng-class="{active: isActive('/profile')}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span id="nav-usericon" class="glyphicon glyphicon-user"></span>
+                            <strong id="nav-profilename">{{orouser.firstname}}</strong>
+                            <span id="nav-dropdownicon" class="glyphicon glyphicon-chevron-down"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="navbar-login">
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <p class="text-center">
+                                                <span class="glyphicon glyphicon-user icon-size"></span>
+                                            </p>
+                                        </div>
+                                        <div id="nav-profiledetails" class="col-lg-8">
+                                            <p class="text-left"><strong>{{orouser.fullname}}</strong></p>
+                                            <p class="text-left small">{{orouser.username}}</p>
+                                            <p class="text-left">
+                                                <a href="#" class="btn btn-primary btn-block btn-sm" ui-sref="profile">Profile</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider navbar-login-session-bg"></li>
+                            <li class="navbar-login-session-bg">
+                                <div class="navbar-login navbar-login-session">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>
+                                                <a href="#" class="btn btn-danger btn-block" ui-sref="main" sp-logout>Logout</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li if-not-user>
+                        <button type="button" class="btn btn-primary btn-lg"
+                            data-toggle="modal" data-target="#modal-login" id="button-signin" ng-click="bIsSignUpAcitve = false">Sign In</button>
+                    </li>
+                    <li if-not-user>
+                        <button type="button" class="btn btn-info btn-lg"
+                            data-toggle="modal" data-target="#modal-login" id="button-signup" ng-click="bIsSignUpAcitve = true">Sign Up</button>
+                    </li>
+                </ul>
             </div>
-
-          </div>
         </div>
-      </nav>
     </div>
 
     <!-- Modal -->
@@ -86,7 +114,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </body>
 </html>

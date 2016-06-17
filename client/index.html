@@ -24,6 +24,7 @@
       <link rel="stylesheet" href="app/main/main.css">
       <link rel="stylesheet" href="app/profile/profile.css">
       <link rel="stylesheet" href="app/register/register.css">
+      <link rel="stylesheet" href="app/selectcombo/selectcombo.css">
       <link rel="stylesheet" href="app/verify/verify.css">
       <link rel="stylesheet" href="components/footer/footer.css">
       <link rel="stylesheet" href="components/navbar/navbar.css">
@@ -55,6 +56,8 @@
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAhE1Oug1xLEK1-Ur8fVxWFTdvyNdQuwiA&libraries=places"
+         async defer></script>
     <!-- build:js({client,node_modules}) app/vendor.js -->
       <!-- bower:js -->
       <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -67,20 +70,26 @@
       <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
       <script src="bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.min.js"></script>
       <script src="bower_components/stormpath-sdk-angularjs/dist/stormpath-sdk-angularjs.tpls.min.js"></script>
+      <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
+      <script src="bower_components/angular-google-places-autocomplete/src/ngAutocomplete.js"></script>
     <!-- build:js(.tmp) app/app.js -->
       <script src="app/app.js"></script>
       <!-- injector:js -->
       <script src="components/util/util.module.js"></script>
       <script src="app/register/register.js"></script>
+      <script src="app/appservicesurl.js"></script>
+      <script src="app/login/login.controller.js"></script>
       <script src="app/login/login.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
       <script src="app/profile/profile.controller.js"></script>
       <script src="app/profile/profile.js"></script>
       <script src="app/register/register.controller.js"></script>
-      <script src="app/login/login.controller.js"></script>
+      <script src="app/appservices.js"></script>
+      <script src="app/selectcombo/selectcombo.controller.js"></script>
+      <script src="app/selectcombo/selectcombo.js"></script>
       <script src="app/verify/verify.controller.js"></script>
       <script src="app/verify/verify.js"></script>
       <script src="components/footer/footer.directive.js"></script>

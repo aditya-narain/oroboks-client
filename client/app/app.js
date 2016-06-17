@@ -7,7 +7,9 @@ angular.module('oroboksApp', [
   'ngSanitize',
   'ui.router',
   'stormpath',
-  'stormpath.templates'
+  'stormpath.templates',
+  'ngAutocomplete',
+  'LocalStorageModule'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
@@ -20,4 +22,7 @@ angular.module('oroboksApp', [
       loginState: 'login',
       defaultPostLoginState: 'main'
     });
-  });
+  })
+  .config(['localStorageServiceProvider', function(localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('oroapp')
+  }]);

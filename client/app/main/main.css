@@ -4,8 +4,8 @@
 
 #banner-1 {
   border-bottom: none;
-  margin-top: -20px;
-  height: 600px;
+  margin-top: 64px;
+  padding-bottom: 190px;
 }
 
 #banner-1 h1 {
@@ -54,7 +54,6 @@
 }
 
 #usershown {
-  height: 300px;
 }
 
 #hex1 {
@@ -190,8 +189,19 @@
     box-shadow: none;
 }
 
+#button-search:focus {
+  outline: 0;
+}
+
 #input-address{
-  width: 700px;
+  margin: auto;
+  width: 650px;
   height:  52px;
+}
+
+@media only screen and (max-width: 690px) {
+    #input-address {
+      width: 300px;
+    }
 }
 

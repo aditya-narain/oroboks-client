@@ -13,10 +13,11 @@ footer.footer {
   cursor: pointer;
 }
 
-a {
+a.links-footer {
     color: 	#00BFFF;
 }
 
 a.links-footer:hover{
 	color:white;
 }
+
