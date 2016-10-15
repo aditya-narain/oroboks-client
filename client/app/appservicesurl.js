@@ -4,8 +4,8 @@ angular.module('oroboksApp')
 .factory('OROServicesUrl', function () {
   
   // Service URLs
-  var getRestaurantURL = function() {
-    return 'https://oroboks.herokuapp.com/restaurants/locations';
+  var getCombosDataURL = function() {
+    return 'https://oroboks.herokuapp.com/combos/locations';
   };
 
   var getUsersURL = function() {
@@ -18,7 +18,7 @@ angular.module('oroboksApp')
 
   // Service URLs api
   return {
-      getRestaurantURL:getRestaurantURL,
+      getCombosDataURL:getCombosDataURL,
       getUsersURL:getUsersURL,
       getUserWithTokenURL:getUserWithTokenURL
   };

@@ -9,7 +9,10 @@ angular.module('oroboksApp', [
   'stormpath',
   'stormpath.templates',
   'ngAutocomplete',
-  'LocalStorageModule'
+  'LocalStorageModule',
+  'oroDirective', 
+  'ui.bootstrap',
+  'google.places'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

@@ -1,1 +1,95 @@
-<div>This is the selectcombo view.</div>
+<html>
+<head>
+ <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/src/autocomplete.css">   
+</head>
+<body>
+  <div class="jumbotron" id="sc-div-content" data-ng-init="initCuisines()">
+    <div class="row">
+      <div class="col-sm-10" id="sc-main-container">
+        <header class="jumbotron" id="sc-header-address">
+          <div class="row">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-5">
+              <div class="input-group">
+               <span class="input-group-btn">
+                 <button class="btn btn-lg" type="submit" id="sc-button-address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></button>
+               </span>
+               <!--s: Address input box -->
+               <form ng-submit="getCombosDataSC(details.geometry.location.lat(), details.geometry.location.lng(), details.formatted_address)">
+                    <input type="text" id="sc-input-searchaddress" placeholder="City/Zipcode" ng-autocomplete ng-model="autocomplete" options="options" details="details" required/>
+               </form>
+               <!--Address input box :e-->
+             </div>
+           </div>
+         </div>
+         <div class="row" id="sc-div-subcontent">
+            <div class="col-sm-3" id="sc-div-cuisine">
+              <br/>
+              <div id="sc-cuisine-title"> Cuisine </div>
+              <div id="sc-div-cuisine-buttons"></div>
+            </div>
+            <div class="col-sm-9" id="sc-div-combotable">
+              <!--s: Tabs for all days -->
+              <br/>
+              <form name="outerForm" class="tab-form-demo">
+                <uib-tabset active="activeForm">
+                  <uib-tab index="$index + 1" ng-repeat="(key, value) in o_dates" heading="{{o_dates[$index] | date:'EEE dd, yyyy'}}">
+                    <div ng-repeat="(o_cuisineobjkey, o_cuisineobj) in o_combolist">
+                      <div ng-if="isCuisineActive(o_cuisineobjkey)">
+                        <div ng-repeat="o_comboelement in o_cuisineobj | filterByDates:value">
+                          <br/>
+                          <div oro-list-element orolistelement="o_comboelement"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </uib-tab>
+                </uib-tabset>
+              </form>
+              <!-- Tabs for all days :e-->
+            </div>
+         </div>
+      </header>
+    </div>
+    <div class="col-sm-2" id="sc-div-summary">
+      <div class="row">
+       <br/>
+       <h4>ORDER SUMMARY</h4>
+       <hr/>
+      </div>
+      <div class="row">
+        <div class="col-sm-12" id="sc-div-summary-content">
+          <div ng-repeat="oroordersummaryelement in o_ordersummarylist">
+            <div oro-order-summary-element oroordersummaryelement="oroordersummaryelement"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="sc-div-checkout">
+        <button id="sc-button-checkout"><h4>PROCEED CHECKOUT</h4></button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+    <div>
+      <div class="modal fade" id="modal-combo-detail" role="dialog">
+        <div class="modal-dialog">
+
+          <div class="modal-content" id="modal-attr">
+              <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                {{o_comboviewdetail.name}}
+              </div>
+              <div class="modal-body">
+                <img class="img-responsive" src="http://hcevisuals.com/wp-content/uploads/2015/02/Food-photography-Cafe-Bar-Sandwich.jpg" alt="Chania" width="300" height="300">{{o_comboviewdetail.summary}}
+              </div>
+
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

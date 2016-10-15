@@ -1,0 +1,23 @@
+<div id="ol-div-combo">
+	<div class="row">
+		<div class="col-sm-7">
+			<div class="row">
+				<div class="col-sm-2" id="ol-div-dishimage">
+					<img class="img-responsive" src="http://hcevisuals.com/wp-content/uploads/2015/02/Food-photography-Cafe-Bar-Sandwich.jpg" alt="Chania" width="100" height="100">
+				</div>
+				<div class="col-sm-10">
+					<div><h4>{{orolistelement.name}}</h4></div>
+					<div><h5>Main Dish: {{orolistelement.mainDish}}</h5></div>
+					<div><h5>Sides: {{orolistelement.sideDish}}</h5></div>
+				</div>
+			</div>
+			<div id="ol-div-type"><h4>Vegetarian</h4></div>
+		</div>
+		<div class="col-sm-5">
+			<div><h4>${{orolistelement.price}}</h4><button id="ol-button-add" ng-click="addToOrderSummary()">+ ADD</button></div>
+			<br/>
+			<div id="ol-div-view-details"><a data-toggle="modal" data-target="#modal-combo-detail" ng-click="openComboModal()">View Details</a></div>
+		</div>
+	</div>
+	<hr/>
+</div>

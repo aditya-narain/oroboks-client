@@ -1,12 +1,12 @@
 <div class="container">
 <h1>Food Delivery Service</h1>
-<form class="form-inline" role="form" ng-submit="getRestaurant(details.geometry.location.lat(), details.geometry.location.lng())">
+<form class="form-inline" role="form" ng-submit="getCombosData(details.geometry.location.lat(), details.geometry.location.lng(), details.formatted_address)">
   <div class="form-group">
     <input type="text"  class="form-control input-lg" id="input-address" placeholder="City/Zipcode" ng-autocomplete ng-model="autocomplete" options="options" details="details" required/>
   </div>
   <button type="submit" id="button-search" class="btn btn-primary btn-lg outline">Search</button>
 </form>
 <!-- Result: <pre>
-{{details.geometry.location.lng()}} 
-{{lat}} and {{lng}}</pre> -->
+{{details.formatted_address}} 
+and {{details.geometry.location.lat()}}</pre> -->
 </div>
