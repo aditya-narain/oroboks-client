@@ -59,9 +59,9 @@
 }
 
 .pac-item-query {
-    font-size: 13px;
-    padding-right: 3px;
-    color: #000
+    font-size: 15px;
+    padding-right: 10px;
+    color: #000;
 }
 
 .pac-icon {
@@ -102,3 +102,6 @@
 .custom-prediction-label {
     font-style: italic;
 }
+
+
+
