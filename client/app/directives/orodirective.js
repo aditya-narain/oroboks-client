@@ -33,18 +33,24 @@ angular.module('oroDirective', [])
 		return {
 			restrict: 'A',
 			scope: {
-				orolistelement: '='
+				orolistelement: '=',
+				orolistelementavailabledate: '='
 			},
 			templateUrl: "app/templates/orolisttemplate.html",
 			controller: function($scope) {
 				if ($scope.orolistelement) {
+					$scope.orolistelement.availabledate = $scope.orolistelementavailabledate;
 					console.log("Orolist: "+ $scope.orolistelement);
+				}
+
+				if ($scope.orolistelementavailabledate) {
+					console.log("Orolist available date: "+ $scope.orolistelementavailabledate);
 				}
 
 				$scope.addToOrderSummary = function() {
 					$scope.$emit('AddingComboToOrderSummary', $scope.orolistelement);
 				};
-				
+
 				$scope.openComboModal = function() {
 					$scope.$emit('OpenComboModal', $scope.orolistelement);
 				};
@@ -62,6 +68,14 @@ angular.module('oroDirective', [])
 				if ($scope.oroordersummaryelement) {
 					console.log("Orolist: "+ $scope.oroordersummaryelement);
 				}
+
+				$scope.incrementOrderSummaryCount = function() {
+					$scope.$emit('AddingComboToOrderSummary', $scope.oroordersummaryelement);
+				};
+
+				$scope.decrementOrderSummaryCount = function() {
+					$scope.$emit('DecrementingOrderSummaryCount', $scope.oroordersummaryelement);
+				};
 			}
 		};
 	});

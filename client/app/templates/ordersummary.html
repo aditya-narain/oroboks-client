@@ -1,10 +1,15 @@
 <div>
 	<div class="row">
-		<div class="col-sm-5" id="os-image">
-			<img class="img-responsive" src="http://hcevisuals.com/wp-content/uploads/2015/02/Food-photography-Cafe-Bar-Sandwich.jpg" alt="Chania" width="50" height="50">
+		<div class="col-xs-4">
+			<img class="img-responsive" src="http://hcevisuals.com/wp-content/uploads/2015/02/Food-photography-Cafe-Bar-Sandwich.jpg" alt="Chania" width="80" height="80">
 		</div>
-		<div class="col-sm-7" id="os-description">
+		<div class="col-xs-5" id="os-description">
 			<div><h5>{{oroordersummaryelement.name}}</h5></div>
+			<div><button type="button" class="btn btn-warning btn-sm" aria-hidden="true" ng-click="decrementOrderSummaryCount()"><div class="glyphicon glyphicon-minus"></div></button>  &nbsp;{{oroordersummaryelement.count}} &nbsp; <button type="button" class="btn btn-warning btn-sm" aria-hidden="true" ng-click="incrementOrderSummaryCount()"><div class="glyphicon glyphicon-plus"></div></button></div>
+		</div>
+		<div class="col-xs-3" id="os-price">
+			${{oroordersummaryelement.tempprice}}<br/>
 		</div>
 	</div>
+	<hr/>
 </div>

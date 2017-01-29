@@ -3,73 +3,102 @@
  <link rel="stylesheet" href="bower_components/angular-google-places-autocomplete/src/autocomplete.css">   
 </head>
 <body>
+  <div id="wrapper">
   <div class="jumbotron" id="sc-div-content" data-ng-init="initCuisines()">
     <div class="row">
-      <div class="col-sm-10" id="sc-main-container">
-        <header class="jumbotron" id="sc-header-address">
-          <div class="row">
-            <div class="col-sm-4">
-            </div>
-            <div class="col-sm-5">
-              <div class="input-group">
-               <span class="input-group-btn">
-                 <button class="btn btn-lg" type="submit" id="sc-button-address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></button>
-               </span>
-               <!--s: Address input box -->
-               <form ng-submit="getCombosDataSC(details.geometry.location.lat(), details.geometry.location.lng(), details.formatted_address)">
-                    <input type="text" id="sc-input-searchaddress" placeholder="City/Zipcode" ng-autocomplete ng-model="autocomplete" options="options" details="details" required/>
-               </form>
-               <!--Address input box :e-->
+        <div class="col-sm-10" id="sc-main-container" ng-style="customComboListDivSize()">
+          <header class="jumbotron" id="sc-header-address">
+            <div class="row">
+              <div class="col-sm-5">
+              </div>
+              <div class="col-sm-5">
+                <div class="input-group">
+                 <span class="input-group-btn">
+                   <button class="btn btn-lg" type="submit" id="sc-button-address"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></button>
+                 </span>
+                 <!--s: Address input box -->
+                 <form ng-submit="getCombosDataSC(details.geometry.location.lat(), details.geometry.location.lng(), details.formatted_address)">
+                      <input type="text" id="sc-input-searchaddress" placeholder="City/Zipcode" ng-autocomplete ng-model="autocomplete" options="options" details="details" required/>
+                 </form>
+                 <!-- Address input box :e-->
+               </div>
              </div>
            </div>
-         </div>
-         <div class="row" id="sc-div-subcontent">
-            <div class="col-sm-3" id="sc-div-cuisine">
-              <br/>
-              <div id="sc-cuisine-title"> Cuisine </div>
-              <div id="sc-div-cuisine-buttons"></div>
-            </div>
-            <div class="col-sm-9" id="sc-div-combotable">
-              <!--s: Tabs for all days -->
-              <br/>
-              <form name="outerForm" class="tab-form-demo">
-                <uib-tabset active="activeForm">
-                  <uib-tab index="$index + 1" ng-repeat="(key, value) in o_dates" heading="{{o_dates[$index] | date:'EEE dd, yyyy'}}">
-                    <div ng-repeat="(o_cuisineobjkey, o_cuisineobj) in o_combolist">
-                      <div ng-if="isCuisineActive(o_cuisineobjkey)">
-                        <div ng-repeat="o_comboelement in o_cuisineobj | filterByDates:value">
-                          <br/>
-                          <div oro-list-element orolistelement="o_comboelement"></div>
+           <div class="row" id="sc-div-subcontent">
+              <div class="col-sm-4">
+                <br/>
+                <div id="sc-cuisine-title"> Choose your Cuisine </div>
+                <div id="sc-div-cuisine-buttons"></div>
+              </div>
+              <div class="col-sm-8">
+                <!--s: Tabs for all days -->
+                <br/>
+                <form name="outerForm" class="tab-form-demo">
+                  <uib-tabset active="activeForm">
+                    <uib-tab index="$index + 1" ng-repeat="(key, value) in o_combolist" heading="{{getSystemDates(key) | date:'EEE dd, yyyy'}}">
+                      <div ng-if="value.length > 0">
+                        <div ng-repeat="o_comboelement in value">
+                          <div ng-if="isCuisineActive(o_comboelement.cuisines)">
+                            <br/>
+                            <div oro-list-element orolistelement="o_comboelement" orolistelementavailabledate="key"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </uib-tab>
-                </uib-tabset>
-              </form>
-              <!-- Tabs for all days :e-->
-            </div>
-         </div>
-      </header>
-    </div>
-    <div class="col-sm-2" id="sc-div-summary">
-      <div class="row">
-       <br/>
-       <h4>ORDER SUMMARY</h4>
-       <hr/>
+                      <div ng-if="isActiveCuisineAvailableAtAll(value)">
+                        <br/>
+                        <h3>Sorry! :( No combos available for current selection. Please try some other selection.</h3>
+                      </div>
+                      <div ng-if="value.length == 0">
+                        <br/>
+                        <h3>Sorry! :( No combo available for this day. Please try some other days.</h3>
+                      </div>
+                    </uib-tab>
+                  </uib-tabset>
+                </form>
+                <!-- Tabs for all days :e-->
+              </div>
+           </div>
+        </header>
       </div>
-      <div class="row">
-        <div class="col-sm-12" id="sc-div-summary-content">
-          <div ng-repeat="oroordersummaryelement in o_ordersummarylist">
-            <div oro-order-summary-element oroordersummaryelement="oroordersummaryelement"></div>
+
+      <div class="col-sm-2" style="margin-top:100px;">
+        <a id="menu-toggle" href="#" style="color:#FF7F50; font-size:30px; padding-left:0px;"><i class="glyphicon glyphicon-shopping-cart"></i></a>
+        <span style="color:#FF7F50;">cart</span>
+      </div>
+
+      <!-- squeezed in div which is not part of col set - its just a side bar which appears when a button is clicked -->
+      <div id="sidebar-wrapper">
+        <div class="row">
+          <div class="col-sm-12">
+           <br/>
+           <h4>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;ORDER SUMMARY  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;<span style:"margin-right:15px;"><a style="color:black;" id="menu-close" href="#"><i class="glyphicon glyphicon-remove"></i></a><span></h4>
+           <hr/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12" id="sc-div-summary-content">
+            <div ng-if="isOrderSummaryListEmpty()">
+                <h2 style="color:#CCCCCC;"> Add Your Meal! :) </h2>
+            </div>
+            <div ng-repeat="availabledate in o_summaryavailabledates">
+              <div id="sc-div-summarydate"><h4>{{getSystemDates(availabledate) | date:'EEEE'}}</h4></div>
+              <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
+              <div ng-repeat="o_ordersummaryelement in o_ordersummarylist | filterByDates:availabledate">
+                <div oro-order-summary-element oroordersummaryelement="o_ordersummaryelement"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12" class="row" id="sc-div-checkout">
+          <div class="col-sm-12">
+            <button id="sc-button-checkout"><h4>PROCEED CHECKOUT</h4></button>
           </div>
         </div>
       </div>
-      <div class="row" id="sc-div-checkout">
-        <button id="sc-button-checkout"><h4>PROCEED CHECKOUT</h4></button>
-      </div>
+
     </div>
-  </div>
-  <!-- Modal -->
+
+  <!-- Modal to display combo details-->
     <div>
       <div class="modal fade" id="modal-combo-detail" role="dialog">
         <div class="modal-dialog">
@@ -90,6 +119,11 @@
       </div>
     </div>
 </div>
+</div>
 
 </body>
 </html>
+
+
+
+
