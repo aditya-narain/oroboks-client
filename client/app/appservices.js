@@ -44,12 +44,26 @@ angular.module('oroboksApp')
       return s_cuisineobject;
     };
 
+    // ORO summary available dates service
+    var setSummaryAvailableDates = function(sad) {
+      localStorageService.set('s_summaryavailabledates', sad);
+    };
+
+    var getSummaryAvailableDates = function() {
+      var s_summaryavailabledates = localStorageService.get('s_summaryavailabledates');
+      if(!s_summaryavailabledates) {
+        var arr = [];
+        return arr;
+      }
+      return s_summaryavailabledates;
+    };
+
     // ORO set items to add to order summary
-    var setItemsToAddInOrderSummary = function(itos) {
+    var addInOrderSummary = function(itos) {
       localStorageService.set('s_itemstoadd', itos);
     };
 
-    var getItemsToAddInOrderSummary = function() {
+    var getItemsFromOrderSummary = function() {
       var s_itemstoadd = localStorageService.get('s_itemstoadd');
       if(!s_itemstoadd) {
         var arr = [];
@@ -78,8 +92,10 @@ angular.module('oroboksApp')
       getFormattedAddr: getFormattedAddr,
       setCuisineObject: setCuisineObject,
       getCuisineObject: getCuisineObject,
-      setItemsToAddInOrderSummary: setItemsToAddInOrderSummary,
-      getItemsToAddInOrderSummary: getItemsToAddInOrderSummary,
+      setSummaryAvailableDates: setSummaryAvailableDates,
+      getSummaryAvailableDates: getSummaryAvailableDates,
+      addInOrderSummary: addInOrderSummary,
+      getItemsFromOrderSummary: getItemsFromOrderSummary,
       removeItem: removeItem,
       clearAllData: clearAllData
     }
