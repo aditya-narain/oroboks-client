@@ -10,7 +10,7 @@ service names: always start with ORO - example: OROServices
 */
 
 angular.module('oroboksApp')
-  .controller('SelectcomboCtrl', function ($scope, $http, OROServices, OROServicesUrl, $compile, $parse) {
+  .controller('SelectcomboCtrl', function ($scope, $http, OROServices, OROServicesUrl, $compile, $parse, $location) {
 
   // Setting google api options 
   $scope.options = {
@@ -262,7 +262,7 @@ angular.module('oroboksApp')
     }
 
     $http(req).then(function successCallback(response) {
-        
+        $location.path( "/orderdetails" );
         console.log("successfully saved orders");
     }, function errorCallback(e) {
         console.log("SelectcomboCtrl: failed saving orders: " + e);
