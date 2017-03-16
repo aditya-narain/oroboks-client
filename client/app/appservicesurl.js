@@ -16,10 +16,15 @@ angular.module('oroboksApp')
     return 'https://oroboks.herokuapp.com/users/getToken'
   }
 
+  var getOrdersURL = function() {
+    return 'https://oroboks.herokuapp.com/users/currentuser/orders'
+  }
+
   // Service URLs api
   return {
       getCombosDataURL:getCombosDataURL,
       getUsersURL:getUsersURL,
-      getUserWithTokenURL:getUserWithTokenURL
+      getUserWithTokenURL:getUserWithTokenURL,
+      getOrdersURL:getOrdersURL
   };
 });

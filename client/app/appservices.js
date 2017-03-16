@@ -71,6 +71,16 @@ angular.module('oroboksApp')
       }
       return s_itemstoadd;
     };
+
+    // ORO set total price to pay
+    var setTotalPriceToPay = function(tptp) {
+      localStorageService.set('s_totalpricetopay', tptp);
+    };
+
+    var getTotalPriceToPay = function() {
+      var s_totalpricetopay = localStorageService.get('s_totalpricetopay');
+      return s_totalpricetopay;
+    };
  
     // Remove specific item from local storage
     var removeItem = function(item) {
@@ -96,6 +106,8 @@ angular.module('oroboksApp')
       getSummaryAvailableDates: getSummaryAvailableDates,
       addInOrderSummary: addInOrderSummary,
       getItemsFromOrderSummary: getItemsFromOrderSummary,
+      setTotalPriceToPay: setTotalPriceToPay,
+      getTotalPriceToPay: getTotalPriceToPay,
       removeItem: removeItem,
       clearAllData: clearAllData
     }

@@ -8,7 +8,7 @@ angular.module('oroboksApp')
         types: ['(regions)']
     };
 
-    // getRestaurant function
+    // getRestaurant function - service call to get the data and navigate to selectcombo page
     $scope.getCombosData = function(lat, lng, faddr) {
       $scope.lat = lat;
       $scope.lng = lng;
@@ -29,6 +29,7 @@ angular.module('oroboksApp')
         OROServices.removeItem('s_cuisineobject');
         OROServices.removeItem('s_itemstoadd');
         OROServices.removeItem('s_summaryavailabledates');
+        OROServices.removeItem('s_totalpricetopay');
         OROServices.setCombos(response);
         OROServices.setFormattedAddr(faddr);
 
@@ -40,6 +41,7 @@ angular.module('oroboksApp')
       });
     };
 
+    // Google API related
     // Press enter to fill in full address automatically
     $scope.form = {
       type: 'geocode',

@@ -6,7 +6,7 @@
   <div id="wrapper">
   <div class="jumbotron" id="sc-div-content" data-ng-init="initCuisines()">
     <div class="row">
-        <div class="col-sm-10" id="sc-main-container" ng-style="customComboListDivSize()">
+        <div class="col-sm-10" id="sc-main-container">
           <header class="jumbotron" id="sc-header-address">
             <div class="row">
               <div class="col-sm-5">
@@ -35,8 +35,12 @@
                 <br/>
                 <form name="outerForm" class="tab-form-demo">
                   <uib-tabset active="activeForm">
-                    <uib-tab index="$index + 1" ng-repeat="(key, value) in o_combolist" heading="{{getSystemDates(key) | date:'EEE dd, yyyy'}}">
-                      <div ng-if="value.length > 0">
+                    <uib-tab index="$index + 1" ng-repeat="(key, value) in o_combolist" heading="{{getSystemDates(key) | date:'EEE dd, yyyy'}}" >
+                      <div ng-if="value.length > 0" ng-style="customComboListDivHeight(value)">
+                        <div ng-if="isActiveCuisineAvailableOnTheDate(value)">
+                          <br/>
+                          <h3>Sorry! :( No combos available for the current option selected. Please choose a different option.</h3>
+                        </div>
                         <div ng-repeat="o_comboelement in value">
                           <div ng-if="isCuisineActive(o_comboelement.cuisines)">
                             <br/>
@@ -44,13 +48,9 @@
                           </div>
                         </div>
                       </div>
-                      <div ng-if="isActiveCuisineAvailableAtAll(value)">
+                      <div ng-if="value.length == 0" ng-style="customComboListDivHeight(value)">
                         <br/>
-                        <h3>Sorry! :( No combos available for current selection. Please try some other selection.</h3>
-                      </div>
-                      <div ng-if="value.length == 0">
-                        <br/>
-                        <h3>Sorry! :( No combo available for this day. Please try some other days.</h3>
+                        <h3>Sorry! :( No combos available for this day. Please select another date.</h3>
                       </div>
                     </uib-tab>
                   </uib-tabset>
@@ -82,17 +82,22 @@
             </div>
             <div ng-repeat="availabledate in o_summaryavailabledates">
               <div id="sc-div-summarydate"><h4>{{getSystemDates(availabledate) | date:'EEEE'}}</h4></div>
-              <hr style="height:1px;border:none;color:#333;background-color:#333;"/>
+              <hr style="height:1px;border:none;color:#333;background-color:#C0C0C0;width:100px"/>
               <div ng-repeat="o_ordersummaryelement in o_ordersummarylist | filterByDates:availabledate">
                 <div oro-order-summary-element oroordersummaryelement="o_ordersummaryelement"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-12" class="row" id="sc-div-checkout">
-          <div class="col-sm-12">
-            <button id="sc-button-checkout"><h4>PROCEED CHECKOUT</h4></button>
-          </div>
+        <div class="row">
+          <span ng-if="o_totalpricetopay">
+            <div class="col-sm-12" id="sc-div-checkout">
+              <button id="sc-button-checkout" ng-click="proceedToCheckout(o_totalpricetopay)">
+                <h4> TOTAL: ${{o_totalpricetopay | number:2}} </h4>
+                <h4>PROCEED CHECKOUT</h4>
+              </button>
+            </div>
+          </span>
         </div>
       </div>
 

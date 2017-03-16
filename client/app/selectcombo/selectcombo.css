@@ -67,24 +67,30 @@
     margin-top: -20px;
     margin-bottom: -20px;
     overflow-y: auto;
-    height: 790px;
+    height: 771px;
 }
 
 #sc-div-checkout {
-    padding-top: 10px;
     margin-top: 10px;
     background-color: #FF7F50;
-    height: 70px;
+    height: 80px;
 }
 
 #sc-button-checkout {
     color: #F9F8F6;
     background-color: transparent;
+    width: 350px;
+    height: 80px;
     border: none;
 }
 
 #sc-button-checkout:focus {
     outline: 0;
+}
+
+#sc-button-checkout:hover {
+    outline: 0;
+    background-color: #FF7F30;
 }
 
 #sc-div-summarydate {
@@ -199,7 +205,7 @@
 
 }
 
-/*check box*/
+/* check box style sheets */
 .checkbox {
   padding-left: 20px; }
   .checkbox label {

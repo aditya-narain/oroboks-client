@@ -18,8 +18,8 @@ angular.module('oroboksApp')
       types: ['(regions)']
   };
 
-  $scope.autocomplete = OROServices.getFormattedAddr(); // get current address  - (this is done to make sure after refresh the data stays there)
-  $scope.o_combos = OROServices.getCombos(); // get combos of the currently searched address
+  $scope.autocomplete = OROServices.getFormattedAddr(); // Get current address  - (this is done to make sure after refresh the data stays there)
+  $scope.o_combos = OROServices.getCombos(); // Get combos of the currently searched address
   $scope.o_combolist = $scope.o_combos.data.dates; // Will be used to populate combo list in tabs
   console.log($scope.o_combolist); // Testing if combos exist
 
@@ -36,7 +36,9 @@ angular.module('oroboksApp')
       };
      }
   });
-  $scope.cuisine_buttons = obj; // created cuisine button object
+
+  // Created cuisine button object
+  $scope.cuisine_buttons = obj; 
 
   if (OROServices.getCuisineObject() != null) {
       $scope.cuisine_buttons = OROServices.getCuisineObject();
@@ -77,28 +79,28 @@ angular.module('oroboksApp')
     if(arrsummaryavailabledates.length != 0) {
       $scope.o_summaryavailabledates = arrsummaryavailabledates;
     }
+
+    // Set the order total price to pay
+    var iTotalPriceToPay = OROServices.getTotalPriceToPay();
+    if (iTotalPriceToPay != null) {
+      $scope.o_totalpricetopay = iTotalPriceToPay;
+    }
+    else {
+      $scope.o_totalpricetopay = null;
+    }
   }
 
   // To get bool value to represent if the combo list is empty or not
-  $scope.customComboListDivSize = function() {
+  $scope.customComboListDivHeight = function(combolist) {
     var temparr = Object.keys($scope.o_combolist);
     var sizearr = temparr.length;
-    if(sizearr==0) {
-      return {height:'975px'};
+    var sizeOfComboList = combolist.length;
+    if(sizeOfComboList<5) {
+      return {height:'700px'};
     }
-  }
-
-  $scope.isComboListEmpty = function() {
-    var temparr;
-    if ($scope.o_combolist === undefined) {
-      return {height:'975px'};
-    }
-    else {
-      temparr = $scope.o_combolist;
-    }
-    var sizearr = temparr.length;
-    if(sizearr==0) {
-      return {height:'975px'};
+    else 
+    {
+      return {};
     }
   }
 
@@ -149,7 +151,7 @@ angular.module('oroboksApp')
   };
 
   // Check if the active cuisine are part of any combos or not
-  $scope.isActiveCuisineAvailableAtAll = function(combolist) {
+  $scope.isActiveCuisineAvailableOnTheDate = function(combolist) {
     var returnValue = true;
     var cuisineObjKeys = Object.keys($scope.cuisine_buttons);
     var cuisineLength = cuisineObjKeys.length;
@@ -160,10 +162,13 @@ angular.module('oroboksApp')
       };
     });
 
+    // This is done because combolist size 0 is handled with different message hence we return false here
+    // CHECK: Please see as to why count == cuisineLength is done, currently do not see a point in doing that
     if (count==cuisineLength || combolist.length == 0) {
       return false;
     }
 
+    // Even if one cuisine matches return false;
     angular.forEach($scope.cuisine_buttons, function (value, key) {
       if (value) {
         for (var i = 0; i < combolist.length; i++) {
@@ -183,6 +188,7 @@ angular.module('oroboksApp')
   $scope.getCombosDataSC = function(lat, lng, faddr) {
     OROServices.removeItem('s_cuisineobject'); // remove cuisine object local storage when new address is searched from here
     OROServices.removeItem('s_itemstoadd');
+    OROServices.removeItem('s_totalpricetopay');
     $scope.lat = lat;
     $scope.lng = lng;
 
@@ -205,6 +211,7 @@ angular.module('oroboksApp')
         OROServices.setCombos(response);
         OROServices.setFormattedAddr(faddr);
 
+        // Getting data for new address typed after a timeout of few milliseconds
         setTimeout(function () {
             $scope.o_combolist = response.data.dates;
             var obj = {};
@@ -219,7 +226,8 @@ angular.module('oroboksApp')
                 };
                }
             });
-            $scope.cuisine_buttons = obj; // created cuisine button object
+            // Resetting all the member variables here
+            $scope.cuisine_buttons = obj; 
             $scope.o_ordersummarylist = [];
             OROServices.addInOrderSummary($scope.o_ordersummarylist);
             $scope.o_summaryavailabledates = [];
@@ -234,6 +242,32 @@ angular.module('oroboksApp')
       });
     };
   };
+
+  // Sending total to proceed checkout screen & saving order summary to backend
+  $scope.proceedToCheckout = function (totalprice) 
+  {
+    $scope.proceedCheckoutJSONObjectArray = [];
+    for (var i = 0; i < $scope.o_ordersummarylist.length; i++) {
+      $scope.proceedCheckoutJSONObject = {comboId:{uuid:$scope.o_ordersummarylist[i].comboId},quantity:$scope.o_ordersummarylist[i].count,orderDate:$scope.o_ordersummarylist[i].availabledate.toString().substring(0,10)};
+      $scope.proceedCheckoutJSONObjectArray.push($scope.proceedCheckoutJSONObject);                                 
+    };
+
+    console.log(JSON.stringify($scope.proceedCheckoutJSONObjectArray));
+
+    var req = {
+      method:'POST',
+      url:OROServicesUrl.getOrdersURL(),
+      data:JSON.stringify($scope.proceedCheckoutJSONObjectArray),
+      headers: {'Content-Type' : 'text/plain'}
+    }
+
+    $http(req).then(function successCallback(response) {
+        
+        console.log("successfully saved orders");
+    }, function errorCallback(e) {
+        console.log("SelectcomboCtrl: failed saving orders: " + e);
+    });
+  }
 
   // Getting the current to next 6 days
   var oDates = {};
@@ -269,21 +303,41 @@ angular.module('oroboksApp')
     });
 
     for (var i = 0; i < arr.length; i++) {
-       if (arr[i].id === data.id && arr[i].count <= 8) { // Need to show an alert box to tell user to not add more than 10 items
+       // Need to show an alert box to tell user to not add more than 10 items
+       if (arr[i].id === data.id && arr[i].count <= 8) {
           arr[i].count = arr[i].count + 1;
           arr[i].tempprice = arr[i].price * arr[i].count;
           arr[i].tempprice = arr[i].tempprice.toFixed(2);
+
+          // Adding to total price and remembering totalprice
+          $scope.o_totalpricetopay = parseFloat($scope.o_totalpricetopay) + parseFloat(arr[i].price);
+          OROServices.setTotalPriceToPay($scope.o_totalpricetopay);
+
+          // Add to order summary
           OROServices.addInOrderSummary(arr);
           $scope.o_ordersummarylist = arr;
        }
     };
 
-    var arrsummaryavailabledates = OROServices.getSummaryAvailableDates(); // getting array of available dates
+    // Getting array of available dates
+    var arrsummaryavailabledates = OROServices.getSummaryAvailableDates();
 
-    if(!bIsDataPresent) { // if not present
+    // If not present
+    if(!bIsDataPresent) {
       data.count = 1;
       data.tempprice = data.price;
       arr.push(data);
+
+      // Adding to total price and remembering totalprice
+      if ($scope.o_totalpricetopay) {
+        // When the item added here is not the first item in the bag we simply add it to the amount that is already present
+        $scope.o_totalpricetopay += parseFloat(data.tempprice);
+      }
+      else {
+        // Otherwise when no items are present or selected at all then we assign the value to o_totalpricetopay scope variable for the first time
+        $scope.o_totalpricetopay = parseFloat(data.tempprice);
+      }
+      OROServices.setTotalPriceToPay($scope.o_totalpricetopay);
 
       // Check if date already present - if yes then don't insert into the array
       var bIsDatePresent = arrsummaryavailabledates.find( function( ele ) { 
@@ -293,7 +347,8 @@ angular.module('oroboksApp')
         return false;
       });
 
-      if (!bIsDatePresent) { // if yes then don't push new date into the array of available dates
+      // if yes then don't push new date into the array of available dates
+      if (!bIsDatePresent) {
         arrsummaryavailabledates.push(data.availabledate);
       };
 
@@ -301,7 +356,7 @@ angular.module('oroboksApp')
       OROServices.addInOrderSummary(arr);
       $scope.o_ordersummarylist = arr;
 
-      // Saving the aviable dates that are selected to order
+      // Saving the avaible dates that are selected to order
       OROServices.setSummaryAvailableDates(arrsummaryavailabledates);
       $scope.o_summaryavailabledates = arrsummaryavailabledates;
     }
@@ -319,10 +374,20 @@ angular.module('oroboksApp')
             arr[i].count = arr[i].count - 1;
             arr[i].tempprice = arr[i].price * arr[i].count;
             arr[i].tempprice = arr[i].tempprice.toFixed(2);
+
+            // Adding to total price and remembering totalprice
+            $scope.o_totalpricetopay =  parseFloat($scope.o_totalpricetopay) - parseFloat(arr[i].price);
+            OROServices.setTotalPriceToPay($scope.o_totalpricetopay);
+
+            // Saving or adding to order summary
             OROServices.addInOrderSummary(arr);
             $scope.o_ordersummarylist = arr;
           }
           else {
+            // Adding to total price and remembering totalprice
+            $scope.o_totalpricetopay =  parseFloat($scope.o_totalpricetopay) - parseFloat(arr[i].price);
+            OROServices.setTotalPriceToPay($scope.o_totalpricetopay);
+
             arr.splice(i, 1);
             OROServices.addInOrderSummary(arr);
             $scope.o_ordersummarylist = arr;
@@ -352,6 +417,7 @@ angular.module('oroboksApp')
     $scope.o_comboviewdetail = data;
   });
 
+  // Google API related
   // Press enter to fill in full address automatically
   $scope.form = {
     type: 'geocode',
@@ -363,7 +429,7 @@ angular.module('oroboksApp')
     watchEnter: true
   }
 
-  // watch form for changes
+  // Watch form for changes
   $scope.watchForm = function () {
     return $scope.form
   };
@@ -372,7 +438,7 @@ angular.module('oroboksApp')
   }, true);
 
 
-  //set options from form selections
+  // Set options from form selections
   $scope.checkForm = function() {
 
     $scope.options = {};
@@ -393,7 +459,8 @@ angular.module('oroboksApp')
     }
   };
    
-}).filter('filterByDates', function () { // Filters - Filter by Date
+}).filter('filterByDates', function () {
+  // Filter by Date 
   return function (items, datearg) {
     var s = datearg.toString();
 
